@@ -9,4 +9,6 @@ ORDERS_TEXT: "Вы можете стать нашим партнером или 
 
 NOT_REALIZED_YET: "Пока не реализовано. Введите \"/start\", чтобы заново вызвать окно диалога."
 UNKNOWN_COMMAND: "Неизвестная команда. Введите \"/start\", чтобы вызвать окно диалога."
+
+CONTRACT_STATUSES: ["Active", "Finished", "Paused"]
 ...
