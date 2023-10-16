@@ -1,14 +1,14 @@
 import sqlite3
 
-from settings import CONTRACT_STATUSES
+from settings import CONTRACT_STATUSES, DB_NAME
 
 
 def create_contract_table() -> None:
-    with sqlite3.connect("database.sqlite3") as connection:
+    with sqlite3.connect(DB_NAME) as connection:
         cursor = connection.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS contract ("
                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                       "contract_number TEXT NOT NULL,"
+                       "contract_number TEXT UNIQUE NOT NULL,"
                        "status TEXT NOT NULL,"
                        "contact_client TEXT NOT NULL,"
                        "sign_date TEXT NOT NULL,"
@@ -18,7 +18,7 @@ def create_contract_table() -> None:
 
 
 def create_contract_status_table() -> None:
-    with sqlite3.connect("database.sqlite3") as connection:
+    with sqlite3.connect(DB_NAME) as connection:
         cursor = connection.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS contract_status ("
                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -26,7 +26,7 @@ def create_contract_status_table() -> None:
 
 
 def create_client_table() -> None:
-    with sqlite3.connect("database.sqlite3") as connection:
+    with sqlite3.connect(DB_NAME) as connection:
         cursor = connection.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS client ("
                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -34,7 +34,7 @@ def create_client_table() -> None:
 
 
 def insert_statuses(statuses: list[str]) -> None:
-    with sqlite3.connect("database.sqlite3") as connection:
+    with sqlite3.connect(DB_NAME) as connection:
         cursor = connection.cursor()
         for status in statuses:
             cursor.execute(f'INSERT OR IGNORE INTO contract_status (status) '
