@@ -5,16 +5,6 @@ from exceptions import NotFoundInDatabase
 
 
 def view_contract(contract_number: str) -> dict[str, str]:
-    """CREATE TABLE IF NOT EXISTS contract ("
-     "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-     "contract_number TEXT UNIQUE NOT NULL,"
-     "status_id INTEGER NOT NULL,"
-     "client_id INTEGER NOT NULL,"
-     "sign_date TEXT NOT NULL,"
-     "expire_date TEXT NOT NULL,"
-     "FOREIGN KEY (status_id) REFERENCES contract_status(id),"
-     "FOREIGN KEY (client_id) REFERENCES client(id))")"""
-
     with sqlite3.connect("database.sqlite3") as connection:
         cursor = connection.cursor()
         cursor.execute(
