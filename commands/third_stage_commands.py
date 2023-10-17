@@ -9,12 +9,18 @@ from settings import THIRD_STATE, CHECK_CONTRACT_TEXT
 
 
 async def check_contract(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    query = update.callback_query
-    await query.answer()
     reply_markup = THIRD_STATE_KEYBOARD
-    await query.message.reply_text(
-        text=CHECK_CONTRACT_TEXT, reply_markup=reply_markup
-    )
+    if update.callback_query:
+        # proceeding callback
+        query = update.callback_query
+        await query.answer()
+        await query.message.reply_text(
+            text=CHECK_CONTRACT_TEXT, reply_markup=reply_markup
+        )
+    elif update.message:
+        # after wrong contract number message
+        await update.message.reply_text(text=CHECK_CONTRACT_TEXT, reply_markup=reply_markup)
+
     return THIRD_STATE
 
 

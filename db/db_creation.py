@@ -9,12 +9,12 @@ def create_contract_table() -> None:
         cursor.execute("CREATE TABLE IF NOT EXISTS contract ("
                        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                        "contract_number TEXT UNIQUE NOT NULL,"
-                       "status TEXT NOT NULL,"
-                       "contact_client TEXT NOT NULL,"
+                       "status_id INTEGER NOT NULL,"
+                       "client_id INTEGER NOT NULL,"
                        "sign_date TEXT NOT NULL,"
                        "expire_date TEXT NOT NULL,"
-                       "FOREIGN KEY (status) REFERENCES contract_status(status),"
-                       "FOREIGN KEY (contact_client) REFERENCES client(client_name))")
+                       "FOREIGN KEY (status_id) REFERENCES contract_status(id),"
+                       "FOREIGN KEY (client_id) REFERENCES client(id))")
 
 
 def create_contract_status_table() -> None:

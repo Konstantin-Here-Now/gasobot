@@ -15,10 +15,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def options(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_markup = FIRST_STATE_KEYBOARD
-    if update.message is not None:
+    if update.message:
         # after "/start" command
         await update.message.reply_text(text=OPTIONS_FIRST_TEXT, reply_markup=reply_markup)
-    elif update.callback_query is not None:
+    elif update.callback_query:
         # proceeding callback
         query = update.callback_query
         await query.answer()
