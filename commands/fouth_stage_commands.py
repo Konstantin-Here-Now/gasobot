@@ -21,8 +21,24 @@ async def look_particular_contract(update: Update, context: ContextTypes.DEFAULT
     contract_number = update.message.text
     try:
         contract_info = view_contract(contract_number)
-        await context.bot.send_message(chat_id=update.effective_chat.id, text=contract_info)
+        contract_info_parsed = _parse_contract(contract_info)
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=contract_info_parsed)
         return await options(update, context)
     except NotFoundInDatabase:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=LOOK_PARTICULAR_CONTRACT_NOT_FOUND_TEXT)
         return await check_contract(update, context)
+
+
+def _parse_contract(contract_info: dict[str, str]) -> str:
+    contract_info_rus = {
+        "Номер договора": contract_info["contract_number"],
+        "Статус договора": contract_info["status"],
+        "Клиент по договору": contract_info["contract_client"],
+        "Дата подписания договора": contract_info["sign_date"],
+        "Дата окончания действия договора": contract_info["expire_date"]
+    }
+    contract_info_list = []
+    for key, value in contract_info_rus.items():
+        contract_info_list.append(f'{key}: {value}')
+    contract_info_parsed = '\n'.join(contract_info_list)
+    return contract_info_parsed
