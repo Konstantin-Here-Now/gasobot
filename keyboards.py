@@ -1,10 +1,10 @@
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
 FIRST_STATE_KEYBOARD = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton("О компании", callback_data="about_company"),
-            InlineKeyboardButton("Уровень добычи", callback_data="production_level", web_app=WebAppInfo("")),
+            InlineKeyboardButton("Уровень добычи", callback_data="production_level"),
         ],
         [InlineKeyboardButton("Заказы", callback_data="orders")]
     ]

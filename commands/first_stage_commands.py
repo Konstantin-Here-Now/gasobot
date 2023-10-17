@@ -4,7 +4,8 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from keyboards import FIRST_STATE_KEYBOARD
-from settings import GREETINGS_TEXT, OPTIONS_FIRST_TEXT, OPTIONS_FURTHER_TEXT, ABOUT_COMPANY_TEXT, PRODUCTION_LEVEL_TEXT, FIRST_STATE
+from settings import GREETINGS_TEXT, OPTIONS_FIRST_TEXT, OPTIONS_FURTHER_TEXT, ABOUT_COMPANY_TEXT, \
+    PRODUCTION_LEVEL_TEXT, FIRST_STATE
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

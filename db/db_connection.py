@@ -1,6 +1,8 @@
 import datetime
 import sqlite3
 
+from exceptions import NotFoundInDatabase
+
 
 def view_contract(contract_number: str) -> dict[str, str]:
     with sqlite3.connect("../database.sqlite3") as connection:
@@ -8,14 +10,17 @@ def view_contract(contract_number: str) -> dict[str, str]:
         cursor.execute(f'SELECT * FROM contract '
                        f'WHERE contract_number="{contract_number}"')
         contract = cursor.fetchone()
-        contract_info = {
-            "contract_number": contract[1],
-            "status": contract[2],
-            "contract_client": contract[3],
-            "sign_date": contract[4],
-            "expire_date": contract[5]
-        }
-        return contract_info
+        if contract:
+            contract_info = {
+                "contract_number": contract[1],
+                "status": contract[2],
+                "contract_client": contract[3],
+                "sign_date": contract[4],
+                "expire_date": contract[5]
+            }
+            return contract_info
+        else:
+            raise NotFoundInDatabase
 
 
 def add_contact(contract_number, status, contract_client, sign_date, expire_date) -> None:

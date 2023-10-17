@@ -8,10 +8,12 @@ from telegram.ext import (
     ConversationHandler, MessageHandler, filters,
 )
 
-from commands.first_stage_commands import start, about_company, production_level, options
-from commands.other_commands import callback_not_realized_yet, unknown_command
-from commands.second_stage_commands import orders, become_partner, check_contract
-from settings import TOKEN, FIRST_STATE, SECOND_STATE, THIRD_STATE
+from commands.first_stage_commands import start, about_company, production_level
+from commands.other_commands import unknown_command
+from commands.second_stage_commands import orders, become_partner
+from commands.third_stage_commands import check_contract, change_contract, terminate_contract
+from commands.fouth_stage_commands import look_contract, look_particular_contract
+from settings import TOKEN, FIRST_STATE, SECOND_STATE, THIRD_STATE, FOURTH_STATE
 
 # Enable logging
 logging.basicConfig(
@@ -44,9 +46,13 @@ def main() -> None:
                 CallbackQueryHandler(check_contract, pattern="^" + "check_contract" + "$"),
             ],
             THIRD_STATE: [
-                # not realized
-                CallbackQueryHandler(callback_not_realized_yet)
+                CallbackQueryHandler(look_contract, pattern="^" + "look_contract" + "$"),
+                CallbackQueryHandler(change_contract, pattern="^" + "change_contract" + "$"),
+                CallbackQueryHandler(terminate_contract, pattern="^" + "terminate_contract" + "$"),
             ],
+            FOURTH_STATE: [
+                MessageHandler(filters.TEXT, look_particular_contract)
+            ]
         },
         fallbacks=[CommandHandler("start", start)],
     )
